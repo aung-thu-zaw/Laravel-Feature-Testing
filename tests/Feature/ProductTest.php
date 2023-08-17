@@ -32,4 +32,20 @@ class ProductTest extends TestCase
 
         $response->assertDontSee("No Products Found!");
     }
+
+    public function test_paginated_products_table_doesnt_contain_11th_record(): void
+    {
+        $products = Product::factory(20)->create();
+
+        $firstProduct = $products->first();
+
+        $response = $this->get('/products');
+
+        $response->assertStatus(200);
+
+        $response->assertViewHas("products", function ($collection) use ($firstProduct) {
+            return !$collection->contains($firstProduct);
+        });
+
+    }
 }
