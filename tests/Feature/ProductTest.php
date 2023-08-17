@@ -14,12 +14,20 @@ class ProductTest extends TestCase
     /**
      * A basic feature test example.
      */
+
+    private User $user;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = $this->createUser();
+    }
+
     public function test_product_page_contains_empty_table(): void
     {
 
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->get('/products');
+        $response = $this->actingAs($this->user)->get('/products');
 
         $response->assertStatus(200);
 
@@ -30,9 +38,7 @@ class ProductTest extends TestCase
     {
         Product::factory()->create();
 
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)->get('/products');
+        $response = $this->actingAs($this->user)->get('/products');
 
         $response->assertStatus(200);
 
@@ -44,16 +50,19 @@ class ProductTest extends TestCase
         $products = Product::factory(20)->create();
 
         $firstProduct = $products->first();
-        
-        $user = User::factory()->create();
 
-        $response = $this->actingAs($user)->get('/products');
+        $response = $this->actingAs($this->user)->get('/products');
 
         $response->assertStatus(200);
 
         $response->assertViewHas("products", function ($collection) use ($firstProduct) {
             return !$collection->contains($firstProduct);
         });
+    }
+
+    private function createUser(): User
+    {
+        return User::factory()->create();
 
     }
 }
