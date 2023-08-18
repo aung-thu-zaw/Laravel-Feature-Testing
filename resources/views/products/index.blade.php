@@ -75,13 +75,11 @@
                             $ {{$product->price}}
                         </td>
                         <td class="px-6 py-4 flex items-center space-x-5">
-                            <form action="#" method="GET">
-                                @csrf
-                                <button type=" submit"
-                                    class="bg-blue-600 px-5 py-2 text-white font-semibold rounded-sm shadow-sm hover:bg-blue-700">
-                                    Edit
-                                </button>
-                            </form>
+
+                            <a href="{{ route('products.edit',$product->id) }}"
+                                class="bg-blue-600 px-5 py-2 text-white font-semibold rounded-sm shadow-sm hover:bg-blue-700">
+                                Edit
+                            </a>
 
                             <form action="{{ route('products.destroy',$product->id) }}" method="POST">
                                 @csrf

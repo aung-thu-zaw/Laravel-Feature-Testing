@@ -34,6 +34,25 @@ class ProductController extends Controller
         return to_route("products.index")->with("success", "Product has been created successfully.");
     }
 
+    public function edit(Product $product)
+    {
+        return view("products.edit", compact("product"));
+    }
+
+    public function update(Request $request, Product $product)
+    {
+        $productData = $request->validate([
+            "name" => ["required","string",Rule::unique("products", "name")],
+            "code" => ["required","string"],
+            "qty" => ["required","numeric"],
+            "price" => ["required","numeric"],
+        ]);
+
+        $product->update($productData);
+
+        return to_route("products.index")->with("success", "Product has been updated successfully.");
+    }
+
     public function destroy(Product $product)
     {
         $product->delete();

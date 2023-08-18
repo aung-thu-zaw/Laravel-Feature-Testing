@@ -41,7 +41,7 @@ Route::middleware("auth")
          Route::get("/", "index")->name("index");
          Route::get("/create", "create")->middleware("admin")->name("create");
          Route::post("/", "store")->middleware("admin")->name("store");
-         Route::get("/{product}", "edit")->name("edit");
-         Route::patch("/{product}", "update")->name("update");
-         Route::delete("/{product}", "destroy")->name("destroy");
+         Route::get("/{product}/edit", "edit")->middleware("admin")->name("edit");
+         Route::patch("/{product}", "update")->middleware("admin")->name("update");
+         Route::delete("/{product}", "destroy")->middleware("admin")->name("destroy");
      });
