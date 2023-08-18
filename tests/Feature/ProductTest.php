@@ -122,6 +122,23 @@ class ProductTest extends TestCase
         $response->assertViewHas("product", $product);
     }
 
+    public function test_product_update_redirect_back_to_form_with_validation_error()
+    {
+
+        $product = Product::factory()->create();
+
+        $response = $this->actingAs($this->admin)->patch("products/".$product->id, [
+            "name" => "",
+            "code" => "",
+            "qty" => "",
+            "price" => "",
+        ]);
+
+        $response->assertStatus(302);
+        // $response->assertSessionHasErrors(["name","code","qty","price"]);
+        $response->assertInvalid(["name","code","qty","price"]);
+    }
+
     public function test_delete_product_successful()
     {
         $product = Product::factory()->create();
