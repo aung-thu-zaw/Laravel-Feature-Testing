@@ -13,4 +13,9 @@ class ProductController extends Controller
             "products" => Product::orderBy("id", "desc")->paginate(10)
         ]);
     }
+
+    public function create()
+    {
+        return view("products.create");
+    }
 }

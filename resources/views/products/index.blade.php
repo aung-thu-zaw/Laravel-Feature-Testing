@@ -1,10 +1,13 @@
 <x-app-layout>
     <div class="container mx-auto mt-48">
         <div class="flex items-center justify-end mb-5">
+            @if (auth()->user()->is_admin)
+
             <button type="button"
                 class="bg-blue-600 px-5 text-sm py-2 text-white font-semibold rounded-sm shadow-sm hover:bg-blue-700">
                 Add Product
             </button>
+            @endif
         </div>
 
         <div
@@ -64,7 +67,6 @@
                             </form>
                         </td>
                     </tr>
-                    {{ $products->links() }}
 
                     @empty
 
@@ -74,6 +76,9 @@
                 </tbody>
             </table>
         </div>
+
+
+        {{ $products->links() }}
 
 
 
