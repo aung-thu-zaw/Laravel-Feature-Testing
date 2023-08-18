@@ -18,7 +18,6 @@ class ProductFactory extends Factory
     {
         return [
         "name" => fake()->unique()->text(20),
-        "image" => fake()->imageUrl(),
         "code" => fake()->randomLetter(),
         "qty" => fake()->numberBetween(1111, 9999),
         "price" => fake()->numberBetween(50, 1000)
