@@ -33,4 +33,12 @@ class ProductController extends Controller
 
         return to_route("products.index")->with("success", "Product has been created successfully.");
     }
+
+    public function destroy(Product $product)
+    {
+        $product->delete();
+
+        return to_route("products.index")->with("success", "Product has been created deleted.");
+    }
+
 }

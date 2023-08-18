@@ -110,6 +110,18 @@ class ProductTest extends TestCase
         $this->assertEquals($product['price'], $lastProduct->price);
     }
 
+    public function test_delete_product_successful()
+    {
+        $product = Product::factory()->create();
+
+        $response = $this->actingAs($this->admin)->delete("products/".$product->id);
+
+        $response->assertStatus(302);
+        $response->assertRedirect("/products");
+        $this->assertDatabaseMissing("products", $product->toArray());
+        $this->assertDatabaseCount("products", 0);
+    }
+
     private function createUser(bool $is_admin = false): User
     {
         return User::factory()->create(["is_admin" => $is_admin]);
